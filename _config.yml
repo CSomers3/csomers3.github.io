@@ -1,9 +1,9 @@
 ###########
 # site.title
 
-title: ET-Jekyll Theme
-description: A minimal Jekyll theme inspired by Tufte CSS
-url: "https://et-jekyll.netlify.app"
+title: Algo Alchemy 
+description: My notes on quantitative finance, economics and data science-related thoughts.   
+url: "https://csomers3.github.io"
 host: 0.0.0.0
 
 
@@ -27,7 +27,7 @@ sass:
 
 baseurl: ""
 permalink: pretty
-timezone: America/New_York
+timezone: Europe/Dublin
 future: false
 
 exclude:
