@@ -1,8 +1,8 @@
 ---
 layout: articles
 title: Articles
-description: A collection of blog posts covering design and development across all mediums
+description: A collection of blog posts covering research and development. 
 ---
 
-<p>A collection of blog posts covering design and development across all mediums.</p>
+<p>A project for 2024</p>
 
