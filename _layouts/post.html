@@ -10,16 +10,15 @@ layout: compress
 
     <article>
         <h1>{{ page.title }}</h1>
-        <p class="subtitle">{{ page.date | date: "%b %-d, %Y" }}</p>
-
-        <!-- Category Tagging -->
-        <div>
-            {% capture category_name %}{{ page.category }}{% endcapture %}
-            <span style="display:inline">[
+        <p class="subtitle">
+            {{ page.date | date: "%b %-d, %Y" }}
+            &emsp;
+            <span style="display:inline; margin-left: 10px;">
+                [{% capture category_name %}{{ page.category }}{% endcapture %}
                 <a href="/category/{{ category_name }}">{{ category_name }}</a>
-            ]</span>
-        </div>
-        <!-- End Category Tagging -->
+                ]
+            </span>
+        </p>
 
         {{ page.content }}
 
