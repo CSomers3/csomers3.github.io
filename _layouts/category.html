@@ -10,27 +10,34 @@ layout: compress
 
     <article>
         <h1>{{ page.title }}</h1>
-        <br>
+
         <div class="posts">
             {% for post in site.categories[page.category] %}
             <div class="post">
-                <h2 align="center" class="post-title">
+                <h2 class="post-title">
                     <a href="{{ post.url }}">
                         {{ post.title }}
                     </a>
                 </h2>
-                <span align="left" class="post-date" title="Estimated read time">
-                    {{ post.date | date_to_string }} &middot;
+                <p class="post-meta">
+                    <span class="post-date" title="Estimated read time">
+                        {{ post.date | date_to_string }} &middot;
 
-                    {% assign words = post.content | number_of_words %}
-                    {% if words < 360 %}
-                    1 min
-                    {% else %}
-                    {{ words | divided_by:200 | at_most:25 }} mins
-                    {% endif %}
-                </span>
+                        {% assign words = post.content | number_of_words %}
+                        {% if words < 360 %}
+                        1 min
+                        {% else %}
+                        {{ words | divided_by:200 | at_most:25 }} mins
+                        {% endif %}
+                    </span>
+                    &emsp;
+                    <span class="post-category">
+                        [<a href="/category/{{ page.category }}">{{ page.category }}</a>]
+                    </span>
+                </p>
 
-                {{ post.excerpt | newline_to_br | newline_to_br | strip_newlines | replace: '<br />', ' ' | strip_html | strip | append: "<br /> <br />" }}
+                {{ post.excerpt | newline_to_br | newline_to_br | strip_newlines | replace: '<br />', ' ' | strip_html | strip }}
+                <br>
                 <a href="{{ post.url }}">Read more...</a>
             </div>
             {% endfor %}
@@ -44,4 +51,3 @@ layout: compress
 </main>
 
 {% include footer-post.html %}
-
