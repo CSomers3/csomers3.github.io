@@ -1,6 +1,7 @@
 ---
 layout: articles
 title: Articles
+show_footer: True
 description: A collection of blog posts covering research and development. 
 ---
 
