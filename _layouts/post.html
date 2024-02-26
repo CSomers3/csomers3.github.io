@@ -9,8 +9,8 @@ layout: compress
     {% include header.html %}
 
     <article>
-        <h1 style="text-align: center;">{{ page.title }}</h1>
-        <p class="subtitle" style="text-align: center;">
+        <h1>{{ page.title }}</h1>
+        <p class="subtitle">
             {{ page.date | date: "%b %-d, %Y" }}
             &emsp;
             <span style="display:inline; margin-left: 20px;">
@@ -20,9 +20,7 @@ layout: compress
             </span>
         </p>
 
-        <div style="text-align: center;">
-            {{ page.content }}
-        </div>
+        {{ page.content }}
 
         <hr>
 
