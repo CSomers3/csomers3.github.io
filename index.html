@@ -1,0 +1,377 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carl Somers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #6b7280;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+        }
+
+        .nav-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #111;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #111;
+        }
+
+        p {
+            color: #4b5563;
+            margin-bottom: 16px;
+        }
+
+        .research-areas {
+            margin: 20px 0;
+        }
+
+        .research-areas ul {
+            list-style: none;
+            color: #6b7280;
+        }
+
+        .research-areas li {
+            margin-bottom: 4px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .research-areas li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: #9ca3af;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-top: 24px;
+        }
+
+        .skill-group h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .skill-group ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .project {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .project:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .project-description {
+            color: #4b5563;
+            margin-bottom: 12px;
+        }
+
+        .tech-list {
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .contact-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover {
+            color: #111;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: 1px solid #e5e7eb;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: #d1d5db;
+            color: #111;
+        }
+
+        .dark {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .dark h1,
+        .dark h2,
+        .dark .project-title {
+            color: #f1f5f9;
+        }
+
+        .dark .nav-link {
+            color: #94a3b8;
+        }
+
+        .dark .nav-link:hover,
+        .dark .nav-link.active {
+            color: #f1f5f9;
+        }
+
+        .dark nav {
+            border-bottom-color: #334155;
+        }
+
+        .dark .project {
+            border-bottom-color: #1e293b;
+        }
+
+        .dark .theme-toggle {
+            border-color: #334155;
+            color: #94a3b8;
+            background: #1e293b;
+        }
+
+        .dark .theme-toggle:hover {
+            border-color: #475569;
+            color: #f1f5f9;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 40px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">☾</button>
+
+    <header>
+        <div class="profile-img">👤</div>
+        <h1>Carl Somers</h1>
+        <p class="subtitle">Student @ UCL</p>
+        <nav>
+            <a href="#about" class="nav-link active">About</a>
+            <a href="#research" class="nav-link">Research</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section" id="about">
+            <h2>About</h2>
+            <p>
+            I am a statistics student interested in applying machine learning to problems in economics and finance. My current work spans forecasting, uncertainty quantification, and human-AI decision making. I am pursuing a master's while exploring research opportunities in these areas. Currently, I’m researching the application of conformal prediction to wind turbine energy forecasting.
+            </p>
+        </section>
+
+        <section class="section" id="research">
+            <h2>Research Interests</h2>
+            <div class="research-areas">
+                <ul>
+                    <li>Probabilistic ML</li>
+                    <li>Deep Learning</li>
+                    <li>Forecasting</li>
+                    <li>Natural Language Processing</li>
+                    <li>Computational Statistics</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section class="section" id="projects">
+            <h2>Selected Projects</h2>
+            
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://your-link-here.com" target="_blank" rel="noopener noreferrer">
+                        Hamiltonian Monte Carlo under Structural Misspecification
+                    </a>
+                </div>
+                <div class="project-description">
+                    Developed (from scratch) a robust Bayesian inference system by extending HMC with parallel tempering and custom likelihoods, improving stability under model misspecification.
+                </div>
+                <div class="tech-list">R</div>
+            </div>
+
+            
+            <div class="project">
+                <div class="project-title">Imbalanced Classification – 1st Place, DataLink 2023</div>
+                <div class="project-description">Trained Random Forest on imbalanced credit risk data using resampling and cross-validation; achieved 79% accuracy and 66% macro F1-score.</div>
+                <div class="tech-list">Python, Sklearn, Optuna</div>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <h2>Contact</h2>
+            <div class="contact-links">
+                <a href="mailto:carl.somers.24@ucl.ac.uk" class="contact-link">Email</a>
+                <a href="https://github.com/CSomers3" class="contact-link">GitHub</a>
+                <a href="https://www.linkedin.com/in/carl-somers" class="contact-link">LinkedIn</a>
+                <a href="/cv.pdf" class="contact-link">CV</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const button = document.querySelector('.theme-toggle');
+            button.textContent = document.body.classList.contains('dark') ? '☀' : '☾';
+        }
+
+        // Simple navigation highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        function updateActiveNav() {
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach((section, index) => {
+                const top = section.offsetTop;
+                const bottom = top + section.offsetHeight;
+                
+                if (scrollPos >= top && scrollPos <= bottom) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    navLinks[index].classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
