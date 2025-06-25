@@ -196,6 +196,7 @@
             color: #111;
         }
 
+        /* Dark mode styles */
         .dark {
             background: #0f172a;
             color: #e2e8f0;
@@ -203,17 +204,37 @@
 
         .dark h1,
         .dark h2,
-        .dark .project-title {
+        .dark .project-title,
+        .dark .skill-group h3 {
             color: #f1f5f9;
         }
 
-        .dark .nav-link {
+        .dark p,
+        .dark .project-description,
+        .dark .subtitle {
+            color: #cbd5e1;
+        }
+
+        .dark .nav-link,
+        .dark .contact-link {
             color: #94a3b8;
         }
 
         .dark .nav-link:hover,
-        .dark .nav-link.active {
+        .dark .nav-link.active,
+        .dark .contact-link:hover {
             color: #f1f5f9;
+        }
+
+        .dark .research-areas li,
+        .dark .research-areas ul,
+        .dark .skill-group ul,
+        .dark .tech-list {
+            color: #94a3b8;
+        }
+
+        .dark .research-areas li::before {
+            color: #64748b;
         }
 
         .dark nav {
@@ -286,7 +307,7 @@
         <section class="section" id="about">
             <h2>About</h2>
             <p>
-            I am a statistics student interested in applying machine learning to problems in economics and finance. My current work spans forecasting, uncertainty quantification, and human-AI decision making. I am pursuing a master's while exploring research opportunities in these areas. Currently, I’m researching the application of conformal prediction to wind turbine energy forecasting.
+            I am a statistics student interested in applying machine learning to problems in economics and finance. My current work spans forecasting, uncertainty quantification, and human-AI decision making. I am pursuing a master's while exploring research opportunities in these areas. Currently, I'm researching the application of conformal prediction to wind turbine energy forecasting.
             </p>
         </section>
 
@@ -302,7 +323,6 @@
                 </ul>
             </div>
         </section>
-
 
         <section class="section" id="projects">
             <h2>Selected Projects</h2>
