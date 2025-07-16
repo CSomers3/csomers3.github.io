@@ -1,400 +1,369 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carl Somers</title>
-    <link rel="icon" type="image/x-icon" href="https://github.com/CSomers3/csomers3.github.io/blob/main/backend/favicon.ico?raw=true">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carl Somers</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap');
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 40px;
-        }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        header {
-            margin-bottom: 60px;
-            text-align: center;
-        }
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a1a;
+    --muted: #737373;
+    --accent: #0066cc;
+    --border: #e5e5e5;
+    --mono: 'JetBrains Mono', monospace;
+  }
 
-        .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            display: block;
-            object-fit: cover;
-            border: 3px solid #e5e7eb;
-        }
+  .dark {
+    --bg: #0a0a0a;
+    --text: #e5e5e5;
+    --muted: #a3a3a3;
+    --accent: #0ea5e9;
+    --border: #262626;
+  }
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 400;
-            margin-bottom: 8px;
-            color: #111;
-        }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='10' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E"), auto;
+  }
 
-        .subtitle {
-            color: #6b7280;
-            font-size: 1rem;
-            margin-bottom: 40px;
-        }
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    position: relative;
+  }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 20px;
-        }
+  .theme-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    background: var(--text);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 100;
+  }
 
-        .nav-link {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
+  .theme-toggle:hover {
+    transform: scale(1.2);
+  }
 
-        .nav-link:hover,
-        .nav-link.active {
-            color: #111;
-        }
+  /* Header with name/role left and picture right */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
 
-        .section {
-            margin-bottom: 50px;
-        }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
 
-        h2 {
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #111;
-        }
+  .name {
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
 
-        p {
-            color: #4b5563;
-            margin-bottom: 16px;
-        }
+  .role {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+  }
 
-        .research-areas {
-            margin: 20px 0;
-        }
+  .profile-img {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    margin-left: 20px;
+    flex-shrink: 0;
+  }
 
-        .research-areas ul {
-            list-style: none;
-            color: #6b7280;
-        }
+  .bio {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 40px;
+  }
 
-        .research-areas li {
-            margin-bottom: 4px;
-            padding-left: 16px;
-            position: relative;
-        }
+  .section {
+    margin-bottom: 60px;
+  }
 
-        .research-areas li::before {
-            content: '—';
-            position: absolute;
-            left: 0;
-            color: #9ca3af;
-        }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+    position: relative;
+  }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 30px;
-            margin-top: 24px;
-        }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
 
-        .skill-group h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #111;
-            margin-bottom: 12px;
-        }
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
 
-        .skill-group ul {
-            list-style: none;
-            font-size: 0.9rem;
-            color: #6b7280;
-            line-height: 1.5;
-        }
+  .interest {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 4px 8px;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
 
-        .project {
-            margin-bottom: 32px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid #f3f4f6;
-        }
+  .interest:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 
-        .project:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
+  .project {
+    margin-bottom: 40px;
+    padding-left: 20px;
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
 
-        .project-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #111;
-            margin-bottom: 8px;
-        }
+  .project::before {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 0;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
 
-        .project-description {
-            color: #4b5563;
-            margin-bottom: 12px;
-        }
+  .project-title {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
 
-        .tech-list {
-            font-size: 0.85rem;
-            color: #9ca3af;
-        }
+  .project-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
 
-        .contact-links {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 24px;
-        }
+  .project-title a:hover {
+    color: var(--accent);
+  }
 
-        .contact-link {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
+  .project-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
 
-        .contact-link:hover {
-            color: #111;
-        }
+  .project-tech {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0.7;
+  }
 
-        .theme-toggle {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: none;
-            border: 1px solid #e5e7eb;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #6b7280;
-            transition: all 0.2s;
-        }
+  .contact {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
 
-        .theme-toggle:hover {
-            border-color: #d1d5db;
-            color: #111;
-        }
+  .contact-item {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.2s ease;
+    position: relative;
+  }
 
-        /* Dark mode styles */
-        .dark {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
+  .contact-item::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.2s ease;
+  }
 
-        .dark h1,
-        .dark h2,
-        .dark .project-title,
-        .dark .skill-group h3 {
-            color: #f1f5f9;
-        }
+  .contact-item:hover {
+    color: var(--accent);
+  }
 
-        .dark p,
-        .dark .project-description,
-        .dark .subtitle {
-            color: #cbd5e1;
-        }
+  .contact-item:hover::before {
+    width: 100%;
+  }
 
-        .dark .nav-link,
-        .dark .contact-link {
-            color: #94a3b8;
-        }
+  .footer {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
 
-        .dark .nav-link:hover,
-        .dark .nav-link.active,
-        .dark .contact-link:hover {
-            color: #f1f5f9;
-        }
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    opacity: 0.5;
+  }
 
-        .dark .research-areas li,
-        .dark .research-areas ul,
-        .dark .skill-group ul,
-        .dark .tech-list {
-            color: #94a3b8;
-        }
+  @media (max-width: 600px) {
+    .container {
+      padding: 40px 16px;
+    }
 
-        .dark .research-areas li::before {
-            color: #64748b;
-        }
+    .header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
 
-        .dark nav {
-            border-bottom-color: #334155;
-        }
+    .header-left {
+      align-items: center;
+    }
 
-        .dark .project {
-            border-bottom-color: #1e293b;
-        }
+    .profile-img {
+      margin-left: 0;
+    }
+  }
 
-        .dark .profile-img {
-            border-color: #334155;
-        }
+  /* Subtle animations */
+  .project {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
 
-        .dark .theme-toggle {
-            border-color: #334155;
-            color: #94a3b8;
-            background: #1e293b;
-        }
+  .project:nth-child(1) { animation-delay: 0.1s; }
+  .project:nth-child(2) { animation-delay: 0.2s; }
+  .project:nth-child(3) { animation-delay: 0.3s; }
 
-        .dark .theme-toggle:hover {
-            border-color: #475569;
-            color: #f1f5f9;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 40px 20px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            nav {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-            
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .contact-links {
-                flex-direction: column;
-                gap: 16px;
-            }
-            
-            .theme-toggle {
-                top: 20px;
-                right: 20px;
-            }
-        }
-    </style>
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">☾</button>
-
-    <header>
-        <img src="https://github.com/CSomers3/csomers3.github.io/blob/main/backend/me.jpeg?raw=true" alt="Carl Somers" class="profile-img">
-        <h1>Carl Somers</h1>
-        <p class="subtitle">Student @ UCL</p>
-        <nav>
-            <a href="#about" class="nav-link active">About</a>
-            <a href="#research" class="nav-link">Research</a>
-            <a href="#projects" class="nav-link">Projects</a>
-            <a href="#contact" class="nav-link">Contact</a>
-        </nav>
+  <button class="theme-toggle" onclick="toggleTheme()"></button>
+  
+  <div class="container">
+    <header class="header">
+      <div class="header-left">
+        <h1 class="name">Carl Somers</h1>
+        <div class="role">Student @ UCL</div>
+      </div>
+      <img src="https://github.com/CSomers3/csomers3.github.io/blob/main/backend/me.jpeg?raw=true" alt="Carl Somers" class="profile-img" />
     </header>
 
-    <main>
-        <section class="section" id="about">
-            <h2>About</h2>
-            <p>
-            Statistics MSc focused on applied uncertainty quantification and probabilistic ML, currently researching conformal prediction for wind energy forecasting. Background in macroeconomic scenario forecasting, time series modelling… and sailing instructing
-            </p>
-        </section>
+    <p class="bio">
+      Statistics MSc focused on applied uncertainty quantification and probabilistic ML, currently researching conformal prediction for wind energy forecasting. Background in macroeconomic scenario forecasting, time series modelling… and sailing instructing.
+    </p>
 
-        <section class="section" id="research">
-            <h2>Research Interests</h2>
-            <div class="research-areas" style="columns: 2; -webkit-columns: 3; -moz-columns: 2;">
-                <ul style="margin: 0; padding: 0; list-style-position: inside;">
-                    <li>Probabilistic ML</li>
-                    <li>Renewable Energy</li>
-                    <li>Forecasting</li>
-                    <li>Uncertainty Quantification</li>
-                    <li>Bayesian Inference</li>
-                    <li>Computational Statistics</li>
-                </ul>
-            </div>
-        </section>
+    <section class="section">
+      <h2 class="section-title">Research Focus</h2>
+      <div class="interests">
+        <span class="interest">Probabilistic ML</span>
+        <span class="interest">Renewable Energy</span>
+        <span class="interest">Forecasting</span>
+        <span class="interest">Uncertainty Quantification</span>
+        <span class="interest">Bayesian Inference</span>
+        <span class="interest">Computational Statistics</span>
+      </div>
+    </section>
 
-        <section class="section" id="projects">
-            <h2>Selected Projects</h2>
-            
-            <div class="project">
-                <div class="project-title">
-                <a href="/docs/HMC_under_Misspecification.pdf" target="_blank" rel="noopener noreferrer">
-                    Hamiltonian Monte Carlo under Structural Misspecification (PDF)
-                </a>
-                </div>
-                <div class="project-description">
-                    Developed (from scratch) a robust Bayesian inference system by extending HMC with parallel tempering and custom likelihoods, improving stability under model misspecification.
-                </div>
-                <div class="tech-list">R</div>
-            </div>
+    <section class="section">
+      <h2 class="section-title">Selected Work</h2>
+      
+      <div class="project">
+        <h3 class="project-title">
+          <a href="/docs/HMC_under_Misspecification.pdf">Hamiltonian Monte Carlo under Structural Misspecification</a>
+        </h3>
+        <p class="project-desc">Developed (from scratch) a robust Bayesian inference system by extending HMC with parallel tempering and custom likelihoods, improving stability under model misspecification.</p>
+        <div class="project-tech">R</div>
+      </div>
 
-            
-            <div class="project">
-                <div class="project-title">Imbalanced Classification – 1st Place, DataLink 2023</div>
-                <div class="project-description">Trained Random Forest on imbalanced credit risk data using resampling and cross-validation; achieved 79% accuracy and 66% macro F1-score.</div>
-                <div class="tech-list">Python, Sklearn, Optuna</div>
-            </div>
-        </section>
+      <div class="project">
+        <h3 class="project-title">Imbalanced Classification – 1st Place, DataLink 2023</h3>
+        <p class="project-desc">Trained Random Forest on imbalanced credit risk data using resampling and cross-validation; achieved 79% accuracy and 66% macro F1-score.</p>
+        <div class="project-tech">Python, Sklearn, Optuna</div>
+      </div>
+    </section>
 
-        <section class="section" id="contact">
-            <h2>Contact</h2>
-            <div class="contact-links">
-                <a href="mailto:carl.somers.24@ucl.ac.uk" class="contact-link">Email</a>
-                <a href="https://github.com/CSomers3" class="contact-link">GitHub</a>
-                <a href="https://www.linkedin.com/in/carl-somers" class="contact-link">LinkedIn</a>
-                <a href="/cv.pdf" class="contact-link">CV</a>
-            </div>
-        </section>
-    </main>
+    <section class="section">
+      <h2 class="section-title">Connect</h2>
+      <div class="contact">
+        <a href="mailto:carl.somers.24@ucl.ac.uk" class="contact-item">Email</a>
+        <a href="https://github.com/CSomers3" class="contact-item">GitHub</a>
+        <a href="https://www.linkedin.com/in/carl-somers" class="contact-item">LinkedIn</a>
+        <a href="/cv.pdf" class="contact-item">CV</a>
+      </div>
+    </section>
 
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            const button = document.querySelector('.theme-toggle');
-            button.textContent = document.body.classList.contains('dark') ? '☀' : '☾';
-        }
+    <footer class="footer">
+      <div class="footer-text">© 2025</div>
+    </footer>
+  </div>
 
-        // Simple navigation highlighting
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('.section');
-
-        function updateActiveNav() {
-            const scrollPos = window.scrollY + 100;
-            
-            sections.forEach((section, index) => {
-                const top = section.offsetTop;
-                const bottom = top + section.offsetHeight;
-                
-                if (scrollPos >= top && scrollPos <= bottom) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    navLinks[index].classList.add('active');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', updateActiveNav);
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    </script>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+  </script>
 </body>
 </html>
