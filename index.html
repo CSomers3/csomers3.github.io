@@ -7,12 +7,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap');
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
+  /* Global CSS Variables */
   :root {
     --bg: #fafafa;
     --text: #1a1a1a;
@@ -20,14 +15,23 @@
     --accent: #0066cc;
     --border: #e5e5e5;
     --mono: 'JetBrains Mono', monospace;
+    --button-bg-light: #f0f0f0;
+    --button-text-light: #1a1a1a;
+    --button-hover-light: #e0e0e0;
+    --shadow-light: rgba(0, 0, 0, 0.08);
   }
 
+  /* Dark Mode Variables */
   .dark {
     --bg: #0a0a0a;
     --text: #e5e5e5;
     --muted: #a3a3a3;
     --accent: #0ea5e9;
     --border: #262626;
+    --button-bg-dark: #1a1a1a;
+    --button-text-dark: #e5e5e5;
+    --button-hover-dark: #2a2a2a;
+    --shadow-dark: rgba(0, 0, 0, 0.4);
   }
 
   body {
@@ -36,8 +40,13 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
-    transition: all 0.3s ease;
-    cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='8' r='8' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E"), auto;
+    transition: background 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+    cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='4' r='4' fill='%23666' fill-opacity='0.6'/%3E%3C/svg%3E"), auto; /* Neutral cursor */
+  }
+
+  /* Specific cursor for dark mode */
+  body.dark {
+    cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='4' r='4' fill='%23ccc' fill-opacity='0.6'/%3E%3C/svg%3E"), auto;
   }
 
   .container {
@@ -47,22 +56,49 @@
     position: relative;
   }
 
+  /* Theme Toggle Button Styles */
   .theme-toggle {
     position: fixed;
     top: 30px;
     right: 30px;
-    width: 20px;
-    height: 20px;
-    background: var(--text);
+    width: 44px; /* Slightly larger for better touch */
+    height: 44px; /* Slightly larger for better touch */
+    background: var(--button-bg-light); /* Default light mode background */
     border: none;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px var(--shadow-light); /* Softer shadow */
+    color: var(--button-text-light); /* Icon color for light mode */
+    font-size: 20px; /* Adjust if using font icons */
+  }
+
+  .dark .theme-toggle {
+    background: var(--button-bg-dark);
+    box-shadow: 0 4px 12px var(--shadow-dark);
+    color: var(--button-text-dark);
   }
 
   .theme-toggle:hover {
-    transform: scale(1.2);
+    transform: translateY(-2px); /* Subtle lift effect */
+    background: var(--button-hover-light); /* Hover color for light mode */
+    box-shadow: 0 6px 16px var(--shadow-light); /* More pronounced shadow on hover */
+  }
+
+  .dark .theme-toggle:hover {
+    background: var(--button-hover-dark);
+    box-shadow: 0 6px 16px var(--shadow-dark);
+  }
+
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor; /* Inherit color from parent */
+    transition: fill 0.3s ease;
   }
 
   /* Header with name/role left and picture right */
@@ -278,6 +314,11 @@
     .profile-img {
       margin-left: 0;
     }
+
+    .theme-toggle {
+      top: 20px;
+      right: 20px;
+    }
   }
 
   /* Subtle animations */
@@ -301,7 +342,24 @@
   <link rel="icon" href="https://raw.githubusercontent.com/CSomers3/csomers3.github.io/main/backend/favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()"></button>
+  <button class="theme-toggle" id="themeToggle">
+    <span id="theme-icon">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </span>
+  </button>
   
   <div class="container">
     <header class="header">
@@ -362,8 +420,49 @@
   </div>
 
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const sunIcon = themeToggleBtn.querySelector('.sun-icon');
+    const moonIcon = themeToggleBtn.querySelector('.moon-icon');
+
+    function updateTheme(isDarkMode) {
+      if (isDarkMode) {
+        document.body.classList.add('dark');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        document.body.classList.remove('dark');
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
+
+    // Toggle theme on button click
+    themeToggleBtn.addEventListener('click', () => {
+      const isDarkMode = document.body.classList.contains('dark');
+      updateTheme(!isDarkMode); // Toggle the state
+      localStorage.setItem('theme', !isDarkMode ? 'dark' : 'light'); // Save preference
+    });
+
+    // Apply theme based on saved preference or system preference on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        updateTheme(savedTheme === 'dark');
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        updateTheme(true); // System prefers dark
+      } else {
+        updateTheme(false); // Default to light
+      }
+    });
+
+    // Listen for system theme changes (if no saved preference)
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        // Only update if there's no saved user preference
+        if (!localStorage.getItem('theme')) {
+          updateTheme(event.matches);
+        }
+      });
     }
   </script>
 </body>
