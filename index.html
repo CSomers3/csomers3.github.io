@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carl Somers</title>
 <meta name="description" content="Carl Somers, PhD student at UCL. Probabilistic ML and uncertainty quantification for weather, energy and fusion.">
-<link rel="icon" href="backend/favicon.ico" type="image/x-icon">
+<link rel="icon" href="backend/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="backend/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="backend/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -68,8 +70,8 @@
 
   header { display: flex; align-items: center; gap: 22px; margin-bottom: 40px; }
   header img {
-    width: 96px; height: 96px; border-radius: 50%;
-    object-fit: cover; filter: grayscale(1) contrast(1.05);
+    width: 104px; height: 104px; border-radius: 50%;
+    object-fit: cover;
     flex-shrink: 0;
   }
   h1 {
@@ -113,7 +115,7 @@
     body { font-size: 18px; }
     main { padding-top: 56px; }
     h1 { font-size: 32px; }
-    header img { width: 76px; height: 76px; }
+    header img { width: 80px; height: 80px; }
     ul.news li { grid-template-columns: 1fr; gap: 0; }
     canvas#wind { height: 220px; }
   }
@@ -122,35 +124,36 @@
 <body>
 <main>
   <header>
-    <img src="backend/me.jpeg" alt="Carl Somers">
+    <img src="backend/portrait.jpg" alt="Carl Somers">
     <div>
       <h1>Carl Somers</h1>
-      <div class="mono">PhD student · UCL &amp; UKAEA</div>
+      <div class="mono">PhD researcher · UCL &amp; UKAEA</div>
     </div>
   </header>
 
   <section>
     <p>I work on probabilistic machine learning and uncertainty quantification for weather, energy and fusion.</p>
-    <p>PhD at UCL with <a href="https://www.ucl.ac.uk/statistics/people/sergeguillas">Serge Guillas</a> and William Hornsby (<a href="https://www.gov.uk/government/organisations/uk-atomic-energy-authority">UKAEA</a>), building ML surrogates for expensive simulators. Before that, quant at <a href="https://www.fuseenergy.com">Fuse Energy</a> and risk analyst at Allied Irish Bank. MSc Statistics, UCL; BSc Economics, UCD.</p>
+    <p>PhD researcher in <a href="https://ccmi-cdt.org">CCMI</a>, the UCL–Imperial doctoral centre, supervised by <a href="https://profiles.ucl.ac.uk/3850-serge-guillas">Serge Guillas</a> and William Hornsby (<a href="https://www.gov.uk/government/organisations/uk-atomic-energy-authority">UKAEA</a>). I build ML/AI surrogates for expensive simulations in nuclear fusion.</p>
+    <p>Before that, quant at <a href="https://www.fuseenergy.com">Fuse Energy</a> working on weather and renewable generation, and quant risk at Allied Irish Bank. MSc Statistics, UCL; BSc Economics, UCD.</p>
   </section>
 
   <h2>News</h2>
   <ul class="news">
     <li><span class="mono">Oct 2026</span><span>Started PhD at UCL with UKAEA.</span></li>
-    <li><span class="mono">Sep 2026</span><span>Paper accepted at AI4PowerGrids, NeurIPS 2026.</span></li>
+    <li><span class="mono">Sep 2026</span><span>Paper accepted at AI4PowerGrids, NeurIPS 2026, Sydney.</span></li>
   </ul>
 
   <h2>Selected work</h2>
   <ul class="items">
     <li>
       <p class="item-title">Conformalised native uncertainty bands for wind power</p>
-      <span class="item-meta mono">AI4PowerGrids · NeurIPS 2026 workshop</span>
+      <span class="item-meta mono">AI4PowerGrids · NeurIPS 2026 workshop · Sydney</span>
     </li>
     <li>
       <p class="item-title">Adaptive conformal inference for wind farm forecasting</p>
       <span class="item-meta mono">MSc thesis, UCL · Oxford Energy Day</span>
       <p class="item-desc">Intervals that keep coverage under drift, on top of a spatio-temporal graph network. With F. Javier Rubio and Domna Ladopoulou.</p>
-      <div class="links mono"><a href="docs/Thesis.pdf">thesis</a><a href="https://github.com/CSomers3/conformal_forecasting">code</a><a href="https://www.energy.ox.ac.uk/wp-content/uploads/2025/02/Poster-Carl-Somers.jpg">poster</a></div>
+      <div class="links mono"><a href="docs/Thesis.pdf">thesis</a><a href="https://github.com/CSomers3/conformal_forecasting">code</a><a href="docs/Poster_ReliableUQ_CarlSomers.pdf">poster</a></div>
     </li>
     <li>
       <p class="item-title">Hamiltonian Monte Carlo under structural misspecification</p>
