@@ -2,7 +2,9 @@
 layout: note
 title: What surrogates are for
 date: 2026-10-10
-permalink: /notes/surrogates/
+permalink: /blog/surrogates/
+back: /blog/
+back_label: blog
 math: true
 draft: true
 ---

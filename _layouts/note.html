@@ -94,6 +94,12 @@
   article img { max-width: 100%; height: auto; display: block; margin: 1.6em auto .4em; }
   article img + em { display: block; text-align: center; font-size: 15px; color: var(--muted); margin-bottom: 1.6em; }
   article hr { border: 0; border-top: 1px solid var(--rule); margin: 2.4em 0; }
+  article ul.list { list-style: none; padding: 0; margin: 0; }
+  article ul.list li {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    margin: 0; padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 20px;
+  }
+  article ul.list li:first-child { border-top: 1px solid var(--rule); }
   article .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
 
   .colophon {
@@ -111,9 +117,9 @@
 </head>
 <body>
 <main>
-  <a class="back mono" href="/">← Carl Somers</a>
+  <a class="back mono" href="{{ page.back | default: '/' }}">← {{ page.back_label | default: 'Carl Somers' }}</a>
   <h1>{{ page.title }}</h1>
-  <span class="date mono">{{ page.date | date: "%B %Y" }}</span>
+  {% if page.date %}<span class="date mono">{{ page.date | date: "%B %Y" }}</span>{% else %}<span class="date"></span>{% endif %}
   <article>
 {{ content }}
   </article>

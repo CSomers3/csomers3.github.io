@@ -1,0 +1,16 @@
+---
+layout: note
+title: Blog
+permalink: /blog/
+back: /notes/
+back_label: notes
+---
+{% assign posts = site.pages | where: "layout", "note" | where_exp: "p", "p.date" | where_exp: "p", "p.draft != true" | sort: "date" | reverse %}
+{% if posts.size > 0 %}
+<ul class="list">
+  {% for p in posts %}<li><a href="{{ p.url }}">{{ p.title }}</a><span class="mono">{{ p.date | date: "%b %Y" }}</span></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Nothing here yet.</p>
+{% endif %}
