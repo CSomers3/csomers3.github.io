@@ -1,0 +1,6 @@
+markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax
+exclude:
+  - README.md

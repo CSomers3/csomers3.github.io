@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }} · Carl Somers</title>
+{% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+{% if page.draft %}<meta name="robots" content="noindex">{% endif %}
+<link rel="icon" href="/backend/favicon.ico" sizes="32x32">
+<link rel="icon" href="/backend/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/backend/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% if page.math %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.querySelector('article'), {delimiters: [{left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]})"></script>
+{% endif %}
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --ink: #1d1c1a;
+    --muted: #6f6a60;
+    --rule: #dcd6c9;
+    --accent: #b5482a;
+    --code: #ece7dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --ink: #ebe7de; --muted: #9a958a;
+      --rule: #2e2c29; --accent: #e0805f; --code: #1f1e1c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --ink: #ebe7de; --muted: #9a958a;
+    --rule: #2e2c29; --accent: #e0805f; --code: #1f1e1c;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 19px;
+    line-height: 1.65;
+    font-optical-sizing: auto;
+  }
+  main { max-width: 620px; margin: 0 auto; padding: 64px 20px 40px; }
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color .2s, color .2s;
+  }
+  a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+  .back { text-decoration: none; }
+  h1 {
+    font-weight: 400; font-size: 38px; line-height: 1.15;
+    margin: 56px 0 8px; letter-spacing: -.01em;
+  }
+  .date { display: block; margin-bottom: 40px; }
+
+  article p, article ul, article ol { margin: 0 0 1.1em; }
+  article ul, article ol { padding-left: 1.3em; }
+  article li { margin-bottom: .3em; }
+  article h2 { font-weight: 500; font-size: 25px; line-height: 1.3; margin: 2em 0 .5em; }
+  article h3 { font-weight: 500; font-size: 20px; margin: 1.6em 0 .4em; }
+  article blockquote {
+    margin: 1.4em 0; padding: 0 0 0 18px;
+    border-left: 2px solid var(--accent); color: var(--muted); font-style: italic;
+  }
+  article code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .8em; background: var(--code); padding: .1em .3em; border-radius: 3px;
+  }
+  article pre {
+    background: var(--code); padding: 14px 16px; border-radius: 4px;
+    overflow-x: auto; line-height: 1.5; margin: 0 0 1.3em;
+  }
+  article pre code { background: none; padding: 0; }
+  article img { max-width: 100%; height: auto; display: block; margin: 1.6em auto .4em; }
+  article img + em { display: block; text-align: center; font-size: 15px; color: var(--muted); margin-bottom: 1.6em; }
+  article hr { border: 0; border-top: 1px solid var(--rule); margin: 2.4em 0; }
+  article .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
+
+  .colophon {
+    max-width: 620px; margin: 72px auto 0; padding: 20px 20px 28px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+
+  @media (max-width: 520px) {
+    body { font-size: 18px; }
+    main { padding-top: 40px; }
+    h1 { font-size: 31px; margin-top: 40px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <a class="back mono" href="/">← Carl Somers</a>
+  <h1>{{ page.title }}</h1>
+  <span class="date mono">{{ page.date | date: "%B %Y" }}</span>
+  <article>
+{{ content }}
+  </article>
+</main>
+<footer class="colophon mono">
+  <span>© {{ site.time | date: "%Y" }} Carl Somers</span>
+  <a href="/">home</a>
+</footer>
+</body>
+</html>
