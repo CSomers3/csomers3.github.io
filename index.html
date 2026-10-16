@@ -87,12 +87,13 @@
   p { margin: 0 0 1em; }
 
   ul.items { list-style: none; margin: 0; padding: 0; }
-  ul.items li { margin-bottom: 28px; }
-  .item-title { font-size: 20px; line-height: 1.35; margin: 0 0 4px; }
-  .item-meta { display: block; margin-bottom: 6px; }
-  .item-desc { margin: 0; opacity: .86; font-size: 17.5px; }
-  .links { margin-top: 6px; }
-  .links a { margin-right: 14px; }
+  ul.items li { padding: 22px 0; border-top: 1px solid var(--rule); }
+  ul.items li:first-child { padding-top: 0; border-top: 0; }
+  .item-title { font-size: 20px; line-height: 1.35; margin: 0; }
+  .item-desc { margin: 6px 0 0; opacity: .86; font-size: 17.5px; line-height: 1.5; }
+  .item-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-top: 10px; }
+  .links a { margin-left: 14px; }
+  .links a:first-child { margin-left: 0; }
 
   ul.news { list-style: none; margin: 0; padding: 0; }
   ul.news li { display: grid; grid-template-columns: 86px 1fr; gap: 12px; margin-bottom: 10px; font-size: 17.5px; }
@@ -147,24 +148,21 @@
   <ul class="items">
     <li>
       <p class="item-title">Conformalised native uncertainty bands for wind power</p>
-      <span class="item-meta mono"><a href="https://ai4powergrids.github.io/">AI4PowerGrids</a> · NeurIPS 2026 workshop · Sydney</span>
-      <div class="links mono"><a href="https://github.com/CSomers3/uq4wind">code</a></div>
+      <div class="item-foot mono"><span><a href="https://ai4powergrids.github.io/">AI4PowerGrids</a> · NeurIPS 2026 workshop · Sydney</span><span class="links"><a href="https://github.com/CSomers3/uq4wind">code</a></span></div>
     </li>
     <li>
       <p class="item-title">Adaptive conformal inference for wind farm forecasting</p>
-      <span class="item-meta mono">MSc thesis, UCL · Oxford Energy Day</span>
       <p class="item-desc">Intervals that keep coverage under drift, on top of a spatio-temporal graph network. With F. Javier Rubio and Domna Ladopoulou.</p>
-      <div class="links mono"><a href="docs/Thesis.pdf">thesis</a><a href="https://github.com/CSomers3/conformal_forecasting">code</a><a href="docs/Poster_ReliableUQ_CarlSomers.pdf">poster</a></div>
+      <div class="item-foot mono"><span>MSc thesis, UCL · Oxford Energy Day</span><span class="links"><a href="docs/Thesis.pdf">thesis</a><a href="https://github.com/CSomers3/conformal_forecasting">code</a><a href="docs/Poster_ReliableUQ_CarlSomers.pdf">poster</a></span></div>
     </li>
     <li>
       <p class="item-title">Hamiltonian Monte Carlo under structural misspecification</p>
-      <span class="item-meta mono">R</span>
       <p class="item-desc">HMC with parallel tempering and custom likelihoods, from scratch.</p>
-      <div class="links mono"><a href="docs/HMC_under_Misspecification.pdf">paper</a><a href="https://github.com/CSomers3/Misspecified-HMC">code</a></div>
+      <div class="item-foot mono"><span>R</span><span class="links"><a href="docs/HMC_under_Misspecification.pdf">paper</a><a href="https://github.com/CSomers3/Misspecified-HMC">code</a></span></div>
     </li>
     <li>
       <p class="item-title">Imbalanced credit-risk classification</p>
-      <span class="item-meta mono">1st place · DataLink 2023</span>
+      <div class="item-foot mono"><span>1st place · DataLink 2023</span></div>
     </li>
   </ul>
 
