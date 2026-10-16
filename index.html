@@ -101,12 +101,7 @@
 
   .contact a { margin-right: 18px; }
 
-  .art-wrap { position: relative; margin-top: 72px; }
-  canvas#wind {
-    display: block; width: 100%; height: 300px; cursor: crosshair;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%);
-            mask-image: linear-gradient(to bottom, transparent 0%, #000 40%);
-  }
+  canvas#sea { display: block; width: 100%; height: 240px; margin-top: 72px; touch-action: pan-y; }
   .colophon {
     max-width: 620px; margin: 0 auto; padding: 0 20px 28px;
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
@@ -118,7 +113,7 @@
     h1 { font-size: 32px; }
     header img { width: 80px; height: 80px; }
     ul.news li { grid-template-columns: 1fr; gap: 0; }
-    canvas#wind { height: 220px; }
+    canvas#sea { height: 180px; }
   }
 </style>
 </head>
@@ -172,102 +167,160 @@
   </p>
 </main>
 
-<div class="art-wrap">
-  <canvas id="wind" aria-label="Wind streamlines" role="img"></canvas>
-</div>
+<canvas id="sea" role="img" aria-label="Pen drawing of a small sailboat on a calm sea at sunset"></canvas>
 <div class="colophon mono">
   <span>© 2026 Carl Somers</span>
-  <span>click to reseed</span>
 </div>
 
 <script>
 (() => {
-  const cvs = document.getElementById('wind');
-  const ctx = cvs.getContext('2d');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let W, H, dpr, particles, seed, t = 0, raf;
+  const cv = document.getElementById('sea');
+  const ctx = cv.getContext('2d');
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const ROWS = 8, BOAT_ROW = 4;
+  let W, H, S, horizon, rows, art, bg, accent;
+  // pointer swell, eased so it rises and settles gently
+  const swell = { x: 0, y: 0, tx: 0, ty: 0, k: 0, tk: 0 };
 
-  function makeField() {
-    const k = [];
-    for (let i = 0; i < 5; i++) {
-      k.push({
-        fx: (0.6 + Math.random() * 1.8) / 300,
-        fy: (0.6 + Math.random() * 1.8) / 300,
-        px: Math.random() * 6.28, py: Math.random() * 6.28,
-        a: 0.4 + Math.random(), s: (Math.random() - .5) * 0.004
+  // boat: 100 units tall, waterline at 0, bow to the right
+  const HULL = new Path2D('M-30,-6L32,-8Q27,3 16,6L-18,6Q-26,2 -30,-6Z');
+  const MAIN = new Path2D('M-3,-74Q-13,-40 -28,-12L-3,-12Z');
+  const JIB = new Path2D('M2,-70Q11,-40 26,-13L2,-13Z');
+  const FLAG = new Path2D('M0,-78L9,-75.5L0,-73Z');
+
+  function setup() {
+    const r = cv.getBoundingClientRect();
+    S = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round(r.width * S); cv.height = Math.round(r.height * S);
+    W = cv.width; H = cv.height;
+    horizon = .38 * H;
+    art = tok('--art'); bg = tok('--bg'); accent = tok('--accent');
+    rows = [];
+    for (let i = 0; i < ROWS; i++) {
+      const p = i / (ROWS - 1);
+      rows.push({
+        p,
+        base: horizon + (H * .97 - horizon) * Math.pow(p, 1.55),
+        amp: (.6 + 7 * Math.pow(p, 1.4)) * S,
+        k: (.05 - .034 * p) / S,
+        speed: .5 + .5 * p,
+        phase: i * 1.7,
+        alpha: .22 + .68 * Math.pow(p, .8),
       });
     }
-    return k;
   }
 
-  function vel(x, y) {
-    let u = 0.9, v = 0;
-    for (const c of seed) {
-      const ax = x * c.fx + c.px + t * c.s, ay = y * c.fy + c.py - t * c.s;
-      u +=  c.a * c.fy * 300 * Math.sin(ax) * -Math.sin(ay) * 0.35;
-      v += -c.a * c.fx * 300 * Math.cos(ax) *  Math.cos(ay) * 0.35;
+  function waveY(r, x, t) {
+    let y = r.base
+      + r.amp * (.7 * Math.sin(r.k * x + r.speed * t + r.phase)
+               + .3 * Math.sin(r.k * 1.9 * x - r.speed * 1.3 * t + r.phase * 2.3));
+    if (swell.k > .001) {
+      const d = (x - swell.x) / (110 * S);
+      const near = Math.exp(-(((r.base - swell.y) / (.4 * H)) ** 2));
+      y -= swell.k * (3 + 11 * r.p) * S * (.35 + .65 * near) * Math.exp(-d * d)
+        * (.65 + .35 * Math.cos(d * 4 - t * 2.4));
     }
-    return [u, v];
+    return y;
   }
 
-  function spawn(p) {
-    p.x = Math.random() * W; p.y = Math.random() * H;
-    p.life = 80 + Math.random() * 220;
-    return p;
+  function frame(ms) {
+    const t = still ? 0 : ms / 1000;
+    swell.x += (swell.tx - swell.x) * .12;
+    swell.y += (swell.ty - swell.y) * .12;
+    swell.k += (swell.tk - swell.k) * .05;
+
+    const ink = a => `rgba(${art}, ${a})`;
+    const step = 3 * S;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+    // the sun, half set
+    const sx = W / 2 - .45 * H, sr = .075 * H;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, horizon); ctx.clip();
+    ctx.globalAlpha = .85; ctx.fillStyle = accent;
+    ctx.beginPath(); ctx.arc(sx, horizon + sr * .25, sr, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    // boat position: drifts slowly left to right and wraps
+    const margin = .2 * H, span = W + 2 * margin;
+    const bx = still ? W / 2 + .5 * H : ((t * 9 * S + W * .62) % span) - margin;
+
+    rows.forEach((r, i) => {
+      const line = new Path2D();
+      for (let x = -step; x <= W + step; x += step) {
+        const y = waveY(r, x, t);
+        x < 0 ? line.moveTo(x, y) : line.lineTo(x, y);
+      }
+      const below = new Path2D(line);
+      below.lineTo(W + step, H + 2); below.lineTo(-step, H + 2); below.closePath();
+      ctx.fillStyle = bg; ctx.fill(below);
+
+      // pen hatching in the troughs of the nearer swells
+      if (r.p > .3) {
+        ctx.beginPath();
+        for (let x = 0; x < W; x += (5.5 - 2.5 * r.p) * S) {
+          const y = waveY(r, x, t);
+          const slope = (waveY(r, x + S, t) - waveY(r, x - S, t)) / (2 * S);
+          if (slope < .06) continue;
+          const len = Math.min(r.amp * 1.6, slope * 26 * S * r.p);
+          ctx.moveTo(x, y + 1.5 * S); ctx.lineTo(x - len * .25, y + len);
+        }
+        ctx.lineWidth = .65 * S; ctx.strokeStyle = ink(r.alpha * .55); ctx.stroke();
+      }
+
+      ctx.lineWidth = (.8 + .5 * r.p) * S; ctx.strokeStyle = ink(r.alpha); ctx.stroke(line);
+
+      // glints of the sun on the far water
+      if (i === 1) {
+        ctx.strokeStyle = accent; ctx.lineWidth = 1.2 * S;
+        [[.03, .9], [.06, .7], [.095, .5], [.135, .32]].forEach(([dy, w], j) => {
+          const shimmer = still ? 1 : .8 + .2 * Math.sin(t * 1.6 + j * 1.9);
+          const half = sr * w * shimmer;
+          ctx.globalAlpha = .55 - j * .1;
+          ctx.beginPath(); ctx.moveTo(sx - half, horizon + dy * H); ctx.lineTo(sx + half, horizon + dy * H); ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      if (i === BOAT_ROW) {
+        const by = waveY(r, bx, t);
+        const tilt = Math.atan((waveY(r, bx + 6 * S, t) - waveY(r, bx - 6 * S, t)) / (12 * S));
+        const u = .0025 * H;
+        ctx.save(); ctx.translate(bx, by + 1.5 * S); ctx.rotate(tilt * .8); ctx.scale(u, u);
+        ctx.fillStyle = bg; ctx.fill(JIB);
+        ctx.strokeStyle = ink(.85); ctx.lineWidth = 1.4; ctx.stroke(JIB);
+        ctx.fillStyle = ink(.9); ctx.fill(MAIN); ctx.fill(HULL);
+        ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, -6); ctx.lineTo(0, -78); ctx.stroke();
+        ctx.fillStyle = accent; ctx.fill(FLAG);
+        ctx.restore();
+      }
+    });
   }
 
-  function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    W = cvs.clientWidth; H = cvs.clientHeight;
-    cvs.width = W * dpr; cvs.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.fillStyle = css('--bg'); ctx.fillRect(0, 0, W, H);
-    const n = Math.round(W * H / 900);
-    particles = Array.from({ length: n }, () => spawn({}));
+  let raf = 0, visible = true;
+  const loop = ms => {
+    raf = 0;
+    if (!rows) return;
+    frame(ms);
+    if (visible && !still) raf = requestAnimationFrame(loop);
+  };
+  const kick = () => { if (!raf && rows) raf = requestAnimationFrame(loop); };
+
+  const refresh = () => { setup(); still ? frame(0) : kick(); };
+  new ResizeObserver(refresh).observe(cv);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', refresh);
+  new MutationObserver(refresh).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) kick(); }).observe(cv);
+
+  if (!still) {
+    cv.addEventListener('pointermove', e => {
+      swell.tx = e.offsetX * S; swell.ty = e.offsetY * S; swell.tk = 1;
+      if (swell.k < .01) { swell.x = swell.tx; swell.y = swell.ty; }
+    });
+    cv.addEventListener('pointerleave', () => { swell.tk = 0; });
   }
-
-  function step(fade) {
-    const art = css('--art');
-    if (fade) { ctx.fillStyle = css('--bg'); ctx.globalAlpha = 0.045; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
-    ctx.lineWidth = 0.7;
-    ctx.strokeStyle = `rgba(${art},0.32)`;
-    ctx.beginPath();
-    for (const p of particles) {
-      const [u, v] = vel(p.x, p.y);
-      const nx = p.x + u * 0.9, ny = p.y + v * 0.9;
-      ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny);
-      p.x = nx; p.y = ny;
-      if (--p.life < 0 || p.x > W + 5 || p.x < -5 || p.y < -5 || p.y > H + 5) spawn(p);
-    }
-    ctx.stroke();
-    t += 1;
-  }
-
-  function loop() { step(true); raf = requestAnimationFrame(loop); }
-
-  function drawStatic() {
-    for (let i = 0; i < 420; i++) step(false);
-  }
-
-  function start() {
-    cancelAnimationFrame(raf);
-    seed = makeField(); t = 0; resize();
-    reduce ? drawStatic() : loop();
-  }
-
-  if (!reduce && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => {
-      cancelAnimationFrame(raf);
-      if (e.isIntersecting) loop();
-    }).observe(cvs);
-  }
-
-  cvs.addEventListener('click', start);
-  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(start, 200); });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', start);
-  start();
 })();
 </script>
 </body>
