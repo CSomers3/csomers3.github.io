@@ -11,16 +11,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..600;1,400&display=swap" rel="stylesheet">
+<script>try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}</script>
 <style>
   /* Risograph: everything printed in riso blue, fluorescent pink for links, a sunflower sun */
-  :root { --bg: #f9f8f5; --ink: #0b5fa5; --muted: #3d74a8; --rule: #cfe0ee; --accent: #ff3d9a; --sun: #f5a524; --art: 11, 95, 165; }
+  :root { --bg: #f9f8f5; --ink: #0b5fa5; --muted: #3d74a8; --rule: #cfe0ee; --accent: #ff3d9a; --surface: #e8eff6; --raised: #ffffff; --sun: #f5a524; --art: 11, 95, 165; }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --sun: #ffc04d; --art: 188, 220, 255; color-scheme: dark; }
+    :root:not([data-theme="light"]) { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --surface: #10243a; --raised: #1f3a5c; --sun: #ffc04d; --art: 188, 220, 255; color-scheme: dark; }
   }
-  :root[data-theme="dark"] { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --sun: #ffc04d; --art: 188, 220, 255; color-scheme: dark; }
+  :root[data-theme="dark"] { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --surface: #10243a; --raised: #1f3a5c; --sun: #ffc04d; --art: 188, 220, 255; color-scheme: dark; }
 
   /* Type: one family, three sizes */
-  :root { --text: "Archivo", "Helvetica Neue", Arial, sans-serif; --small: 13.5px; --body: 17px; --big: 32px; }
+  :root { --text: "Archivo", "Helvetica Neue", Arial, sans-serif; --small: 13.5px; --body: 17px; --big: 32px;
+    --ease: cubic-bezier(.2, .8, .2, 1); --ease-out: cubic-bezier(.16, 1, .3, 1); }
   @media (max-width: 520px) { :root { --body: 16px; --big: 27px; } }
 
   * { box-sizing: border-box; }
@@ -55,6 +57,7 @@
   }
 
   header { display: flex; align-items: center; gap: 22px; margin-bottom: 40px; }
+  header .theme { margin-left: auto; align-self: flex-start; }
   header img {
     width: 104px; height: 104px; border-radius: 50%;
     object-fit: cover;
@@ -100,6 +103,27 @@
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   }
 
+  /* day / night switch: the new theme grows out of the button as a circle */
+  .theme { position: relative; display: inline-flex; padding: 1.5px; border-radius: 999px; background: var(--surface); flex-shrink: 0; }
+  .theme button {
+    position: relative; z-index: 1; width: 25px; height: 25px; padding: 0; border: 0; border-radius: 999px;
+    display: grid; place-items: center; background: none; color: var(--muted); cursor: pointer;
+    transition: color .2s var(--ease);
+  }
+  .theme button[aria-checked="true"], .theme button:hover { color: var(--ink); }
+  .theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .theme svg { transition: transform .6s var(--ease-out); }
+  .theme [data-theme-set="light"][aria-checked="true"] svg { transform: rotate(90deg); }
+  .theme [data-theme-set="dark"][aria-checked="true"] svg { transform: rotate(-24deg); }
+  .theme-thumb {
+    position: absolute; top: 1.5px; left: 1.5px; width: 25px; height: 25px; border-radius: 999px;
+    background: var(--raised); box-shadow: inset 0 0 1px rgba(0, 0, 0, .3); transition: transform .32s var(--ease-out);
+  }
+  .theme[data-on="dark"] .theme-thumb { transform: translateX(25px); }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-new(root) { z-index: 2; }
+  html.theme-fade, html.theme-fade * { transition: background-color .26s, color .26s, border-color .26s !important; }
+
   @media (max-width: 520px) {
     main { padding-top: 56px; }
     header img { width: 80px; height: 80px; }
@@ -115,6 +139,11 @@
     <div>
       <h1>Carl Somers</h1>
       <div class="mono">PhD @ UCL</div>
+    </div>
+    <div class="theme" role="radiogroup" aria-label="Theme">
+      <span class="theme-thumb" aria-hidden="true"></span>
+      <button type="button" role="radio" aria-checked="true" aria-label="Day" data-theme-set="light"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.6v1.3M8 13.1v1.3M1.6 8h1.3M13.1 8h1.3M3.5 3.5l.9.9M11.6 11.6l.9.9M3.5 12.5l.9-.9M11.6 4.4l.9-.9"/></svg></button>
+      <button type="button" role="radio" aria-checked="false" aria-label="Night" data-theme-set="dark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width=".9" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 9.4A5 5 0 0 1 6.6 3.4a5 5 0 1 0 6 6Z"/></svg></button>
     </div>
   </header>
 
@@ -450,6 +479,36 @@
     });
     cv.addEventListener('pointerleave', () => { gust.tk = 0; });
   }
+})();
+</script>
+<script>
+(() => {
+  const root = document.documentElement, ui = document.querySelector('.theme');
+  const sys = matchMedia('(prefers-color-scheme: dark)');
+  const current = () => root.dataset.theme || (sys.matches ? 'dark' : 'light');
+  const sync = () => {
+    const t = current();
+    ui.dataset.on = t;
+    ui.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.themeSet === t)));
+  };
+  const apply = t => { root.dataset.theme = t; try { localStorage.setItem('theme', t); } catch {} sync(); };
+  ui.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const t = b.dataset.themeSet;
+    if (t === current()) return;
+    if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      root.classList.add('theme-fade'); apply(t);
+      setTimeout(() => root.classList.remove('theme-fade'), 260);
+      return;
+    }
+    const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    document.startViewTransition(() => apply(t)).ready.then(() => {
+      root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 720, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' });
+    }).catch(() => {});
+  }));
+  sys.addEventListener('change', sync);
+  sync();
 })();
 </script>
 </body>
