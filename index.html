@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="backend/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..600;1,400&display=swap" rel="stylesheet">
 <style>
   /* Risograph: everything printed in riso blue, fluorescent pink for links, a sunflower sun */
   :root { --bg: #f9f8f5; --ink: #0b5fa5; --muted: #3d74a8; --rule: #cfe0ee; --accent: #ff3d9a; --sun: #f5a524; --art: 11, 95, 165; }
@@ -19,16 +19,19 @@
   }
   :root[data-theme="dark"] { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --sun: #ffc04d; --art: 188, 220, 255; color-scheme: dark; }
 
+  /* Type: one family, three sizes */
+  :root { --text: "Archivo", "Helvetica Neue", Arial, sans-serif; --small: 13.5px; --body: 17px; --big: 32px; }
+  @media (max-width: 520px) { :root { --body: 16px; --big: 27px; } }
+
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 19px;
-    line-height: 1.6;
-    font-optical-sizing: auto;
+    font-family: var(--text);
+    font-size: var(--body);
+    line-height: 1.55;
   }
   main {
     max-width: 620px;
@@ -46,9 +49,8 @@
   a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
   .mono {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12.5px;
-    letter-spacing: .04em;
+    font-size: var(--small);
+    font-variant-numeric: tabular-nums;
     color: var(--muted);
   }
 
@@ -59,13 +61,12 @@
     flex-shrink: 0;
   }
   h1 {
-    font-weight: 400; font-size: 40px; line-height: 1.1;
+    font-weight: 400; font-size: var(--big); line-height: 1.1;
     margin: 0 0 6px; letter-spacing: -.01em;
   }
   h2 {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-weight: 500; font-size: 12px; text-transform: uppercase;
-    letter-spacing: .12em; color: var(--muted);
+    font-weight: 400; font-size: var(--small); text-transform: uppercase;
+    letter-spacing: .07em; color: var(--muted);
     margin: 64px 0 20px;
   }
   p { margin: 0 0 1em; }
@@ -73,15 +74,14 @@
   ul.items { list-style: none; margin: 0; padding: 0; }
   ul.items li { padding: 22px 0; border-top: 1px solid var(--rule); }
   ul.items li:first-child { padding-top: 0; border-top: 0; }
-  .item-title { font-size: 20px; line-height: 1.35; margin: 0; }
-  .item-desc { margin: 6px 0 0; opacity: .86; font-size: 17.5px; line-height: 1.5; }
+  .item-title { font-weight: 600; margin: 0; }
+  .item-desc { margin: 4px 0 0; color: var(--muted); }
   .item-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-top: 10px; }
   .links a { margin-left: 14px; }
   .links a:first-child { margin-left: 0; }
 
   ul.news { list-style: none; margin: 0; padding: 0; }
-  ul.news li { display: grid; grid-template-columns: 86px 1fr; gap: 12px; margin-bottom: 10px; font-size: 17.5px; }
-  ul.news .mono { padding-top: 4px; }
+  ul.news li { display: grid; grid-template-columns: 86px 1fr; gap: 12px; align-items: baseline; margin-bottom: 10px; }
 
   .contact a { margin-right: 18px; }
 
@@ -101,9 +101,7 @@
   }
 
   @media (max-width: 520px) {
-    body { font-size: 18px; }
     main { padding-top: 56px; }
-    h1 { font-size: 32px; }
     header img { width: 80px; height: 80px; }
     ul.news li { grid-template-columns: 1fr; gap: 0; }
     canvas#sea { height: 180px; }
@@ -121,14 +119,14 @@
   </header>
 
   <section>
-    <p>I work on probabilistic machine learning and uncertainty quantification for weather, energy and fusion.</p>
+    <p>I'm interested in probabilistic machine learning, and using it to solve problems in weather and energy.</p>
     <p>PhD student in <a href="https://ccmi-cdt.org">CCMI</a> (UCL × Imperial), supervised by <a href="https://profiles.ucl.ac.uk/3850-serge-guillas">Serge Guillas</a> and William Hornsby (<a href="https://www.gov.uk/government/organisations/uk-atomic-energy-authority">UKAEA</a>). I'm researching ML/AI surrogates for expensive simulations in nuclear fusion.</p>
     <p>Before that, quant at <a href="https://www.fuseenergy.com">Fuse Energy</a> working on weather and renewable generation, and quant risk at Allied Irish Bank. MSc Statistics, UCL; BSc Economics, UCD.</p>
   </section>
 
   <h2>News</h2>
   <ul class="news">
-    <li><span class="mono">Oct 2026</span><span>Started PhD at UCL with UKAEA.</span></li>
+    <li><span class="mono">Oct 2026</span><span>Started my PhD at UCL.</span></li>
     <li><span class="mono">Sep 2026</span><span>Paper accepted at <a href="https://ai4powergrids.github.io/">AI4PowerGrids</a>, NeurIPS 2026, Sydney.</span></li>
   </ul>
 
@@ -150,7 +148,7 @@
     </li>
     <li>
       <p class="item-title">Imbalanced credit-risk classification</p>
-      <div class="item-foot mono"><span>1st place · DataLink 2023</span></div>
+      <div class="item-foot mono"><span>1st place · DataLink 2023</span><span class="links"><a href="https://github.com/CSomers3/credit_classification/blob/main/Credit%20Risk%20Classification%20-%20Carl%20Somers.ipynb">code</a></span></div>
     </li>
   </ul>
 
@@ -226,6 +224,9 @@
 
   const pack = (r, g, b, a) => ((a << 24) | (b << 16) | (g << 8) | r) >>> 0;
   const hex = h => { const n = parseInt(h.replace('#', ''), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
+  const RED = pack(255, 72, 72, 255), RED_HALO = pack(255, 72, 72, 110);
+  const GREEN = pack(64, 224, 128, 255), GREEN_HALO = pack(64, 224, 128, 110);
+  let INK_HALO;
   const toCov = L => { const tone = 1 - Math.exp(-L * expo); return dark ? Math.pow(tone, 1.6) : Math.pow(1 - tone, 1.1); };
 
   function setup() {
@@ -239,7 +240,8 @@
     const bg = hex(tok('--bg'));
     dark = (bg[0] + bg[1] + bg[2]) / 3 < 128;
     expo = dark ? 1.1 : 2.4;
-    INK = pack(...tok('--art').split(',').map(Number), 255);
+    const art = tok('--art').split(',').map(Number);
+    INK = pack(...art, 255); INK_HALO = pack(...art, 110);
     ACC = pack(...hex(tok('--sun')), 255);
 
     vigX = new Float32Array(W); FAR = new Float32Array(W); NEAR = new Float32Array(W);
@@ -384,6 +386,31 @@
           if (y + 2 < H) cov[i + 2 * W] += e;
         }
         out[i] = sunPx[i] ? ACC : on ? INK : 0;
+      }
+    }
+
+    // at night the boat shows her lights: a red and green bicolour at the bow, white at the stern
+    if (dark && boat) {
+      const rot = Math.atan(bhx) * .7, sc = .075 * ppm, co = Math.cos(rot), si = Math.sin(rot);
+      const at = (ux, uy) => [Math.round(bsx + (ux * co - uy * si) * sc), Math.round(bsy + (ux * si + uy * co) * sc)];
+      const put = (x, y, c) => { if (x >= 0 && y >= 0 && x < W && y < H) out[y * W + x] = c; };
+      const flick = Math.floor(t * 10);
+      const [bx, by] = at(29, -8), [sx, sy] = at(-31, -6);
+      for (const [lx, ly, col, halo] of [[bx - 1, by, RED, RED_HALO], [bx + 2, by, GREEN, GREEN_HALO], [sx, sy, INK, INK_HALO]]) {
+        if (lx < 0 || lx >= W || ly < 0 || ly >= H || vigX[lx] * vigY[ly] < .3) continue;
+        for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
+          const r2 = dx * dx + dy * dy;
+          if (r2 <= 2) put(lx + dx, ly + dy, col);
+          else if (r2 <= 10 && (dx + dy) % 2 === 0) put(lx + dx, ly + dy, halo);
+        }
+        // the light's reflection, a broken streak wobbling on the swell
+        for (let k = 3; k < 40; k++) {
+          const y = wl + k;
+          if (y >= H) break;
+          const x = lx + Math.round(Math.sin(y * 1.3 + t * 2.5) * 2);
+          const hsh = ((x * 73856093) ^ (y * 19349663) ^ (flick * 83492791)) >>> 0;
+          if ((hsh % 100) / 100 < .85 * (1 - k / 40)) { put(x, y, k < 16 ? col : halo); if (k < 12) put(x + 1, y, halo); }
+        }
       }
     }
     ctx.putImageData(img, 0, 0);
