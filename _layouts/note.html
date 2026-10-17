@@ -169,7 +169,11 @@
     }
     const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    document.startViewTransition(() => apply(t)).ready.then(() => {
+    // wait (briefly) for the sea to repaint in the new colours, so the reveal never shows the old picture
+    document.startViewTransition(() => {
+      apply(t);
+      return Promise.race([window.seaRepaint ? window.seaRepaint() : null, new Promise(r => setTimeout(r, 150))]);
+    }).ready.then(() => {
       root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 720, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});
