@@ -19,24 +19,12 @@
   onload="renderMathInElement(document.querySelector('article'), {delimiters: [{left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]})"></script>
 {% endif %}
 <style>
-  :root {
-    --bg: #f6f3ec;
-    --ink: #1d1c1a;
-    --muted: #6f6a60;
-    --rule: #dcd6c9;
-    --accent: #b5482a;
-    --code: #ece7dc;
-  }
+  /* Risograph: everything printed in riso blue, fluorescent pink for links, a sunflower sun */
+  :root { --bg: #f9f8f5; --ink: #0b5fa5; --muted: #3d74a8; --rule: #cfe0ee; --accent: #ff3d9a; --code: #eaf1f8; }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #141413; --ink: #ebe7de; --muted: #9a958a;
-      --rule: #2e2c29; --accent: #e0805f; --code: #1f1e1c;
-    }
+    :root:not([data-theme="light"]) { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --code: #12253b; color-scheme: dark; }
   }
-  :root[data-theme="dark"] {
-    --bg: #141413; --ink: #ebe7de; --muted: #9a958a;
-    --rule: #2e2c29; --accent: #e0805f; --code: #1f1e1c;
-  }
+  :root[data-theme="dark"] { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ff7ac0; --code: #12253b; color-scheme: dark; }
 
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
