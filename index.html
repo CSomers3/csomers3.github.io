@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..600;1,400&display=swap" rel="stylesheet">
-<script>try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}</script>
+<script>try { localStorage.removeItem('theme'); const t = sessionStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}</script>
 <style>
   /* Risograph: everything printed in riso blue, fluorescent pink for links, a sunflower sun */
   :root { --bg: #f9f8f5; --ink: #0b5fa5; --muted: #3d74a8; --rule: #cfe0ee; --accent: #ff3d9a; --surface: #e8eff6; --raised: #ffffff; --sun: #f5a524; --art: 11, 95, 165; }
@@ -249,7 +249,7 @@
     ui.dataset.on = t;
     ui.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.themeSet === t)));
   };
-  const apply = t => { root.dataset.theme = t; try { localStorage.setItem('theme', t); } catch {} sync(); };
+  const apply = t => { root.dataset.theme = t; try { sessionStorage.setItem('theme', t); } catch {} sync(); };
   ui.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     const t = b.dataset.themeSet;
     if (t === current()) return;
