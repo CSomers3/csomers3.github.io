@@ -22,9 +22,6 @@
 <style>
   /* Risograph: everything printed in riso blue, orange for links, a sunflower sun */
   :root { --bg: #f9f8f5; --ink: #0b5fa5; --muted: #3d74a8; --rule: #cfe0ee; --accent: #dd6b0d; --surface: #e8eff6; --raised: #ffffff; --code: #eaf1f8; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ffb24d; --surface: #10243a; --raised: #1f3a5c; --code: #12253b; color-scheme: dark; }
-  }
   :root[data-theme="dark"] { --bg: #0b1a2b; --ink: #bcdcff; --muted: #7aa6cf; --rule: #1d3350; --accent: #ffb24d; --surface: #10243a; --raised: #1f3a5c; --code: #12253b; color-scheme: dark; }
 
   /* Type: one family, three sizes */
@@ -151,8 +148,7 @@
 <script>
 (() => {
   const root = document.documentElement, ui = document.querySelector('.theme');
-  const sys = matchMedia('(prefers-color-scheme: dark)');
-  const current = () => root.dataset.theme || (sys.matches ? 'dark' : 'light');
+  const current = () => root.dataset.theme || 'light';
   const sync = () => {
     const t = current();
     ui.dataset.on = t;
@@ -178,7 +174,11 @@
         { duration: 720, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});
   }));
-  sys.addEventListener('change', sync);
+  addEventListener('pageshow', e => {
+    if (!e.persisted) return;
+    try { const t = sessionStorage.getItem('theme'); if (t === 'light' || t === 'dark') root.dataset.theme = t; } catch {}
+    sync();
+  });
   sync();
 })();
 </script>

@@ -262,6 +262,11 @@
         { duration: 720, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});
   }));
+  addEventListener('pageshow', e => {
+    if (!e.persisted) return;
+    try { const t = sessionStorage.getItem('theme'); if (t === 'light' || t === 'dark') root.dataset.theme = t; } catch {}
+    sync();
+  });
   sync();
 })();
 </script>

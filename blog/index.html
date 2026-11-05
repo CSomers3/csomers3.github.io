@@ -1,16 +1,15 @@
 ---
-layout: note
-title: Blog
+layout: null
 permalink: /blog/
-back: /notes/
-back_label: notes
 ---
-{% assign posts = site.pages | where: "layout", "note" | where_exp: "p", "p.date" | where_exp: "p", "p.draft != true" | sort: "date" | reverse %}
-{% if posts.size > 0 %}
-<ul class="list">
-  {% for p in posts %}<li><a href="{{ p.url }}">{{ p.title }}</a><span class="mono">{{ p.date | date: "%b %Y" }}</span></li>
-  {% endfor %}
-</ul>
-{% else %}
-<p>Nothing here yet.</p>
-{% endif %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blog · Carl Somers</title>
+<link rel="canonical" href="https://csomers3.github.io/smol-brain/blog/">
+<meta http-equiv="refresh" content="0; url=https://csomers3.github.io/smol-brain/blog/">
+<script>location.replace('https://csomers3.github.io/smol-brain/blog/');</script>
+</head>
+<body><a href="https://csomers3.github.io/smol-brain/blog/">blog</a></body>
+</html>
