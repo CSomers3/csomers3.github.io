@@ -72,13 +72,11 @@
   p { margin: 0 0 1em; }
 
   ul.items { list-style: none; margin: 0; padding: 0; }
-  ul.items li { padding: 22px 0; border-top: 1px solid var(--rule); }
-  ul.items li:first-child { padding-top: 0; border-top: 0; }
+  ul.items li { display: grid; grid-template-columns: 86px 1fr; gap: 12px; align-items: baseline; margin-bottom: 30px; }
+  ul.items li:last-child { margin-bottom: 0; }
   .item-title { font-weight: 600; margin: 0; }
-  .item-desc { margin: 4px 0 0; color: var(--muted); }
   .item-meta { margin: 6px 0 0; }
   .item-meta + .item-meta { margin-top: 2px; }
-  .authors .me { color: var(--ink); font-weight: 600; }
   .links { margin: 8px 0 0; }
   .links a { margin-right: 14px; }
 
@@ -126,7 +124,7 @@
   @media (max-width: 520px) {
     main { padding-top: 56px; }
     header img { width: 80px; height: 80px; }
-    ul.news li { grid-template-columns: 1fr; gap: 0; }
+    ul.news li, ul.items li { grid-template-columns: 1fr; gap: 0; }
     canvas#sea { height: 180px; }
   }
 </style>
@@ -158,33 +156,40 @@
     <li><span class="mono">Sep 2026</span><span>Paper accepted at <a href="https://ai4powergrids.github.io/">AI4PowerGrids</a>, NeurIPS 2026, Sydney.</span></li>
   </ul>
 
-  <h2>Papers</h2>
+  <h2>Work</h2>
   <ul class="items">
     <li>
-      <p class="item-title">The Cost of Coverage: Conformalising Native Forecast Uncertainty for GB Wind Power</p>
-      <p class="item-meta mono authors"><span class="me">Carl Somers</span></p>
-      <p class="item-meta mono"><a href="https://ai4powergrids.github.io/">AI for Power Grids</a> workshop, NeurIPS 2026 · Sydney</p>
-      <p class="links mono"><a href="https://arxiv.org/abs/2611.09815">arxiv</a><a href="https://github.com/CSomers3/uq4wind">code</a></p>
-    </li>
-  </ul>
-
-  <h2>Projects</h2>
-  <ul class="items">
-    <li>
-      <p class="item-title">Adaptive conformal inference for wind farm forecasting</p>
-      <p class="item-desc">Intervals that keep coverage under drift, on top of a spatio-temporal graph network. With F. Javier Rubio and Domna Ladopoulou.</p>
-      <p class="item-meta mono">MSc thesis, UCL · Oxford Energy Day</p>
-      <p class="links mono"><a href="docs/Thesis.pdf">thesis</a><a href="https://github.com/CSomers3/conformal_forecasting">code</a></p>
+      <span class="mono">2026</span>
+      <div>
+        <p class="item-title">The Cost of Coverage: Conformalising Native Forecast Uncertainty for GB Wind Power</p>
+        <p class="item-meta mono">Workshop paper, <a href="https://ai4powergrids.github.io/">AI for Power Grids</a> at NeurIPS 2026, Sydney</p>
+        <p class="links mono"><a href="https://arxiv.org/abs/2611.09815">arxiv</a><a href="https://github.com/CSomers3/uq4wind">code</a></p>
+      </div>
     </li>
     <li>
-      <p class="item-title">Hamiltonian Monte Carlo under structural misspecification</p>
-      <p class="item-desc">HMC with parallel tempering and custom likelihoods, from scratch, in R.</p>
-      <p class="links mono"><a href="docs/HMC_under_Misspecification.pdf">paper</a><a href="https://github.com/CSomers3/Misspecified-HMC">code</a></p>
+      <span class="mono">2025</span>
+      <div>
+        <p class="item-title">Adaptive conformal inference for wind farm forecasting</p>
+        <p class="item-meta mono">MSc thesis at UCL, presented at Oxford Energy Day</p>
+        <p class="item-meta mono">Supervised by F. Javier Rubio and Domna Ladopoulou</p>
+        <p class="links mono"><a href="docs/Thesis.pdf">thesis</a><a href="https://github.com/CSomers3/conformal_forecasting">code</a></p>
+      </div>
     </li>
     <li>
-      <p class="item-title">Imbalanced credit-risk classification</p>
-      <p class="item-meta mono">1st place · DataLink 2023</p>
-      <p class="links mono"><a href="https://github.com/CSomers3/credit_classification/blob/main/Credit%20Risk%20Classification%20-%20Report.pdf">report</a><a href="https://github.com/CSomers3/credit_classification">code</a></p>
+      <span class="mono">2025</span>
+      <div>
+        <p class="item-title">Hamiltonian Monte Carlo under structural misspecification</p>
+        <p class="item-meta mono">Project at UCL, in R</p>
+        <p class="links mono"><a href="docs/HMC_under_Misspecification.pdf">report</a><a href="https://github.com/CSomers3/Misspecified-HMC">code</a></p>
+      </div>
+    </li>
+    <li>
+      <span class="mono">2023</span>
+      <div>
+        <p class="item-title">Imbalanced credit-risk classification</p>
+        <p class="item-meta mono">Competition, 1st place at DataLink</p>
+        <p class="links mono"><a href="https://github.com/CSomers3/credit_classification/blob/main/Credit%20Risk%20Classification%20-%20Report.pdf">report</a><a href="https://github.com/CSomers3/credit_classification">code</a></p>
+      </div>
     </li>
   </ul>
 
